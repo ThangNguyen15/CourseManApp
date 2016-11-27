@@ -1,8 +1,16 @@
 /**
  * Created by ThangNguyen.
  */
+
+/**
+ * @overview 
+ */
 public class CourseManager {
     private DBApp dba = new DBApp();
+
+    public CourseManager(DBApp dba) {
+        this.dba = dba;
+    }
 
     public boolean addCourse(String courseId, String courseName, String prerequisites) {
         String sql = "INSERT INTO Course VALUES('" + courseId + "','" + courseName + "', '" + prerequisites + "');";
@@ -13,7 +21,7 @@ public class CourseManager {
     }
 
     public boolean editCourseName(String courseId, String newCourseName) {
-        String sql = "UPDATE Course SET name ='" + newCourseName + "'WHERE courseid = " + courseId + "";
+        String sql = "UPDATE Course SET name ='" + newCourseName + "' WHERE courseid = '" + courseId + "';";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -21,7 +29,7 @@ public class CourseManager {
     }
 
     public boolean editCoursePrerequisites(String courseId, String newPrerequisites) {
-        String sql = "UPDATE Course SET prerequisites ='" + newPrerequisites + "'WHERE courseid = " + courseId + "";
+        String sql = "UPDATE Course SET prerequisites ='" + newPrerequisites + "'WHERE courseid = '" + courseId + "';";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -29,7 +37,7 @@ public class CourseManager {
     }
 
     public boolean deleteCourse(String courseId) {
-        String sql = "DELETE FROM Course WHERE courseid = '" + courseId + "'";
+        String sql = "DELETE FROM Course WHERE courseid = '" + courseId + "';";
         System.out.println("Executing query: " + sql);
         dba.delete(sql);
         System.out.println("Delete successfully!");
@@ -53,13 +61,13 @@ public class CourseManager {
     }
 
     public boolean validateCourseId(String courseId) {
-        String sql = "SELECT courseid FROM Course";
+        String sql = "SELECT * FROM Course WHERE courseid = '" + courseId + "';";
         String result = dba.selectToString(sql);
 
-        if (result.contains(courseId)) {
-            return true;
-        } else
+        if (result.equals("empty")) {
             return false;
+        } else
+            return true;
     }
 
     public boolean validateCourseName(String courseName) {

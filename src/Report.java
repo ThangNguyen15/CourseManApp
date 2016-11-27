@@ -4,8 +4,23 @@
 public class Report {
     private DBApp dba = new DBApp();
 
+    public Report(DBApp dba) {
+        this.dba = dba;
+    }
+
     public void displayStudentCourses(int studentId) {
-        String sql = "SELECT* FROM Enrolment WHERE student =" + studentId + "";
+        String sql = "SELECT" +
+                " student.studentid," +
+                " course.courseid," +
+                " course.name" +
+                " FROM" +
+                " public.course," +
+                " public.enrolment," +
+                " public.student" +
+                " WHERE" +
+                " enrolment.course = course.courseid AND" +
+                " enrolment.student = student.studentid AND" +
+                " student.studentid = " + studentId + ";";
         System.out.println("Executing query: " + sql);
         String result = dba.select(sql);
         String userDir = System.getProperty("user.dir");
@@ -21,7 +36,20 @@ public class Report {
     }
 
     public void displayStudentOfACourse(String courseId) {
-        String sql = "SELECT* FROM Enrolment WHERE course ='" + courseId + "'";
+        String sql = "SELECT" +
+                " student.studentid," +
+                " student.firstname," +
+                " student.lastname," +
+                " student.dateofbirth," +
+                " course.courseid" +
+                " FROM" +
+                " public.course," +
+                " public.enrolment," +
+                " public.student" +
+                " WHERE" +
+                " enrolment.course = course.courseid AND" +
+                " enrolment.student = student.studentid AND" +
+                " course.courseid = '" + courseId + "'";
         System.out.println("Executing query: " + sql);
         String result = dba.select(sql);
         String userDir = System.getProperty("user.dir");
@@ -36,7 +64,8 @@ public class Report {
     }
 
     public void displayFailedStudent() {
-        String sql = "SELECT* FROM Enrolment WHERE finalgrade ='F'";
+        String sql = "SELECT Enrolment.course, Student.studentid, Student.firstname, Student.lastname, Student.dateofbirth FROM Enrolment " +
+                     "INNER JOIN student ON enrolment.student = student.studentid WHERE finalgrade = 'F';";;
         System.out.println("Executing query: " + sql);
         String result = dba.select(sql);
         String userDir = System.getProperty("user.dir");

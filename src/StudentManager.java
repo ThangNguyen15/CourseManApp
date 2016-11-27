@@ -4,6 +4,10 @@
 public class StudentManager {
     private DBApp dba = new DBApp();
 
+    public StudentManager(DBApp dba) {
+        this.dba = dba;
+    }
+
     public boolean addStudent(int studentId, String firstName, String lastName, String address, String dOB) {
 
         String sql = "INSERT INTO Student VALUES(" + studentId + ",'" + firstName + "', '" + lastName + "', '" + address
@@ -11,12 +15,11 @@ public class StudentManager {
         System.out.println("Executing query: " + sql);
         dba.insert(sql);
         System.out.println("Add successfully!");
-        System.out.println("Fail to add new student.");
         return true;
     }
 
     public boolean editFirstName(int studentId, String newFirstName) {
-        String sql = "UPDATE student SET firstname ='" + newFirstName + "'WHERE studentid = " + studentId + "";
+        String sql = "UPDATE student SET firstname ='" + newFirstName + "' WHERE studentid = " + studentId + "";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -24,7 +27,7 @@ public class StudentManager {
     }
 
     public boolean editLastName(int studentId, String newLastName) {
-        String sql = "UPDATE student SET lastname ='" + newLastName + "'WHERE studentid = " + studentId + "";
+        String sql = "UPDATE student SET lastname ='" + newLastName + "' WHERE studentid = " + studentId + "";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -32,7 +35,7 @@ public class StudentManager {
     }
 
     public boolean editAddress(int studentId, String newAddress) {
-        String sql = "UPDATE student SET address ='" + newAddress + "'WHERE studentid = " + studentId + "";
+        String sql = "UPDATE student SET address ='" + newAddress + "' WHERE studentid = " + studentId + "";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -40,7 +43,7 @@ public class StudentManager {
     }
 
     public boolean editDOB(int studentId, String newDOB) {
-        String sql = "UPDATE student SET dateofbirth ='" + newDOB + "'WHERE studentid = " + studentId + "";
+        String sql = "UPDATE student SET dateofbirth ='" + newDOB + "' WHERE studentid = " + studentId + "";
         System.out.println("Executing query: " + sql);
         dba.update(sql);
         System.out.println("Update successfully!");
@@ -73,29 +76,29 @@ public class StudentManager {
     }
 
     public boolean validateStudentId(int studentId) {
-        String sql = "SELECT* FROM Student WHERE studentid = " + studentId + ";";
+        String sql = "SELECT * FROM Student WHERE studentid = " + studentId + ";";
         String result = dba.selectToString(sql);
 
-        if (result.equals("")) {
+        if (result.equals("empty")) {
             return false;
         } else
             return true;
     }
 
     public boolean validateFirstName(String firstName) {
-        return ((firstName != null) && (firstName.length() > 0) && (firstName.length() <= 50));
+        return ((firstName.length() > 0) && (firstName.length() <= 50));
     }
 
     public boolean validateLastName(String lastName) {
-        return ((lastName != null) && (lastName.length() > 0) && (lastName.length() <= 50));
+        return ((lastName.length() > 0) && (lastName.length() <= 50));
     }
 
     public boolean validateAddress(String address) {
-        return ((address != null) && (address.length() > 0) && (address.length() <= 250));
+        return ((address.length() > 0) && (address.length() <= 250));
     }
 
     public boolean validateDateOfBirth(String dOB) {
-        return ((dOB != null) && (dOB.length() > 0) && (dOB.length() <= 30));
+        return ((dOB.length() > 0) && (dOB.length() <= 30));
     }
 
     public boolean validateInfo(String firstName, String lastName, String address, String dOB) {
